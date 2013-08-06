@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: cron
-# Recipe:: test
+# Recipe:: sync
 #
 # Copyright:: (c) 2012, Opscode, Inc.
 #
@@ -19,9 +19,16 @@
 
 include_recipe "cron"
 
-cron_d "daily-usage-report" do
+cron_d "sync_am" do
   minute 0
-  hour 23
-  command "/srv/app/scripts/daily_report"
-  user "appuser"
+  hour 9
+  command "cd /srv/www/singleops/current && bundle exec rails runner sync.rb -e production"
+  user "root"
+end
+
+cron_d "sync_pm" do
+  minute 0
+  hour 21
+  command "cd /srv/www/singleops/current && bundle exec rails runner sync.rb -e production"
+  user "root"
 end
