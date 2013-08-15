@@ -21,14 +21,14 @@ include_recipe "cron"
 
 cron_d "sync_am" do
   minute 0
-  hour 9
+  hour 12
   command "cd /srv/www/singleops/current && bundle exec rails runner sync.rb -e production"
   user "root"
 end
 
 cron_d "sync_pm" do
   minute 0
-  hour 21
+  hour 0
   command "cd /srv/www/singleops/current && bundle exec rails runner sync.rb -e production"
   user "root"
 end
